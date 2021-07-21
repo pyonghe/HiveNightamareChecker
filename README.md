@@ -1,4 +1,4 @@
-# HiveNightmareChecker
+# HiveNightmareChecker CVE-2021–36934
 * To check if system is vulnerable to HiveNightmare CVE-2021-36934
 * Check if shadow copies are available, help user to delete them and create new restore points after ensuring the permission of SAM, SECURITY, SYSTEM is correct. 
 * More info : https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-36934
