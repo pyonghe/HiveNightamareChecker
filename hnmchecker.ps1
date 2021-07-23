@@ -1,10 +1,9 @@
-# Run command to get the status of Spooler
 write-host("`n====Checking if System is vulnerable to CVE-2021-36934====") -ForegroundColor Green
 $result = @((Get-Item -LiteralPath C:\windows\System32\config\SAM).GetAccessControl().AccessToString)
 $result2 = @((Get-Item -LiteralPath C:\windows\System32\config\SYSTEM).GetAccessControl().AccessToString)
 $result3 = @((Get-Item -LiteralPath C:\windows\System32\config\SECURITY).GetAccessControl().AccessToString)
 
-# Check if $result2 = Running if yes system is vulnerable else System is safe
+
 if ($result -like "*BUILTIN\Users Allow*"){
 	
 	write-host("`nMisconfiguration") -ForegroundColor red -NoNewline; Write-host(" in SAM file")
@@ -53,6 +52,7 @@ if ($result -like "*BUILTIN\Users Allow*"){
 		if ($delete -like "Y"){
 			# delete shadow copies 
 			vssadmin delete shadows /for=c:
+			# Create new restore point
 			Checkpoint-Computer -Description "New Restorepoint for CVE-2021-36934" -RestorePointType MODIFY_SETTINGS
 			write-host("`nDone") -ForegroundColor Green -NoNewline; Write-host(" creating restore point and mitigating CVE-2021-36943!")
 			write-host("`nSystem is ") -ForegroundColor white -NoNewline; write-host("not vulnerable") -ForegroundColor Green -NoNewline; Write-host(" to CVE-2021-36934") -ForegroundColor white -NoNewline;
